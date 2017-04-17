@@ -54,7 +54,9 @@ class PCHeader extends React.Component{
             .then(response=>response.json())
             .then(json=>{
                 this.setState({userNickName:json.NickUserName,userid:json.UserId});
-                 console.log(json);
+                localStorage.setItem('userNickName',this.state.userNickName);
+                localStorage.setItem('userid',this.state.userid);
+                console.log(json);
         });
         if(this.state.action=="login"){
             this.setState({hasLogined:true});
@@ -69,32 +71,42 @@ class PCHeader extends React.Component{
             this.setState({action:'register'});
         }
     };
+    logout(){
+        localStorage.setItem('userNickName','');
+        localStorage.setItem('userid','');
+        this.setState({hasLogined:false});
+    };
+    componentWillMount(){
+        if(localStorage.getItem('userNickName')||localStorage.getItem('userid')){
+            this.setState({userNickName:localStorage.getItem('userNickName'),userid:localStorage.getItem('userid'),hasLogined:true});
+        };
+    };
     render(){
         let {getFieldProps} = this.props.form;
         const userShow = this.state.hasLogined
-            ? <Menu.Item key="logout" class="register">
+            ? <Menu.Item key="logout" class="login">
                 <Button type="primary" htmlType="button">{this.state.userNickName}</Button>
                 &nbsp;&nbsp;
                 <Link target="_blank">
                     <Button type="dashed" htmlType="button">个人中心</Button>
                 </Link>
                 &nbsp;&nbsp;
-                <Button type="ghost" htmlType="button">退出</Button>
+                <Button type="ghost" htmlType="button" onClick={this.logout.bind(this)}>退出</Button>
             </Menu.Item>
-            : <Menu.Item key="register" class="register">
+            : <Menu.Item key="register"  class="register">
                 <Icon type="appstore"/>注册/登录
             </Menu.Item>;
         return(
             <header>
                 <Row>
-                    <Col span={2}></Col>
+                    <Col span={1}></Col>
                     <Col span={4}>
                         <a href="/" class="logo">
                             <img src="./src/images/logo.png" alt="logo"/>
                             <span>ReactNews</span>
                         </a>
                     </Col>
-                    <Col span={16}>
+                    <Col span={18}>
                         <Menu mode="horizontal" selectedKeys={[this.state.current]} onClick={this.handleClick.bind(this)} >
                             <Menu.Item key="top">
                                 <Icon type="appstore"/>头条
@@ -152,7 +164,7 @@ class PCHeader extends React.Component{
                             </Tabs>
                         </Modal>
                     </Col>
-                    <Col span={2}></Col>
+                    <Col span={1}></Col>
                 </Row>
             </header>
         );
