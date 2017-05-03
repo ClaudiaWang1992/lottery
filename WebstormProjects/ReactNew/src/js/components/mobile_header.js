@@ -61,12 +61,13 @@ class MobileHeader extends React.Component{
         }else if(activityKey == 2){
             this.setState({action:'register'});
         }
+        console.log(activityKey);
     };
-    logout(){
+   /* logout(){
         localStorage.setItem('userNickName','');
         localStorage.setItem('userid','');
         this.setState({hasLogined:false});
-    };
+    };*/
     componentWillMount(){
         if(localStorage.getItem('userNickName')||localStorage.getItem('userid')){
             this.setState({userNickName:localStorage.getItem('userNickName'),userid:localStorage.getItem('userid'),hasLogined:true});
@@ -75,8 +76,8 @@ class MobileHeader extends React.Component{
     render(){
         let{getFieldProps} = this.props.form;
         const userShow = this.state.hasLogined ?
-            <Link>
-                <Icon type="inbox" onClick={this.logout.bind(this)}/>
+            <Link to={`/usercenter`}>
+                <Icon type="inbox"/>
             </Link>
             :
             <Icon type="setting" onClick={this.login.bind(this)}/>
