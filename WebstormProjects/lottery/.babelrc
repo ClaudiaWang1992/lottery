@@ -1,0 +1,5 @@
+{
+  // 配置babel
+  "presets":["es2015"],
+  "plugins":["transform-decorators-legacy"]
+}
