@@ -26,6 +26,10 @@ app.use(function *(next){
   console.log('%s %s - %s', this.method, this.url, ms);
 });
 
+app.use(require('koa-liveload')(__dirname,{
+    include: ['ejs'],
+    exclude: ['components']
+}));
 app.use(require('koa-static')(__dirname + '/public'));
 
 // routes definition

@@ -6,7 +6,7 @@ router.get('/', function *(next) {
   });
 });
 
-router.get('/foo', function *(next) {
+router.get('/fooo', function *(next) {
   yield this.render('index', {
     title: 'Hello World foo!'
   });
